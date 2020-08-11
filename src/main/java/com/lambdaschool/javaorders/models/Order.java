@@ -1,82 +1,113 @@
 package com.lambdaschool.javaorders.models;
 
-
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
 public class Order
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
-    private long ordnum;
+    private long ordnum; // primary key
 
-    private double advanceamount;
     private double ordamount;
+    private double advanceamount;
     private String orderdescription;
 
-
     @ManyToOne
-    @JoinColumn(name = "custcode", nullable = false)
-    private Customer customer;
+    @JoinColumn(name = "custcode", nullable = false) // primary key inside of customer, sql handles in relational DB
+    private Customer customer; // java handles as object
+
+    @ManyToMany
+    @JoinTable(name = "orderspayments",
+            joinColumns = @JoinColumn(name = "ordnum"),
+            inverseJoinColumns = @JoinColumn(name = "paymentid"))
+    private Set<Payment> payments = new HashSet<>();
 
 
+    // Constructors
     public Order()
     {
     }
 
-    public Order(long ordnum,
-                 double advanceamount,
-                 double ordamount,
-                 String orderdescription,
-                 Customer customer)
+    public Order(
+            double ordamount,
+            double advanceamount,
+            Customer customer,
+            String orderdescription)
     {
-        this.ordnum = ordnum;
-        this.advanceamount = advanceamount;
         this.ordamount = ordamount;
-        this.orderdescription = orderdescription;
+        this.advanceamount = advanceamount;
         this.customer = customer;
+        this.orderdescription = orderdescription;
     }
 
-    public long getOrdnum() {
+
+    // Getters and Setters
+    public long getOrdnum()
+    {
         return ordnum;
     }
 
-    public void setOrdnum(long ordnum) {
+    public void setOrdnum(long ordernum)
+    {
         this.ordnum = ordnum;
     }
 
-    public double getAdvanceamount() {
-        return advanceamount;
-    }
-
-    public void setAdvanceamount(double advanceamount) {
-        this.advanceamount = advanceamount;
-    }
-
-    public double getOrdamount() {
+    public double getOrdamount()
+    {
         return ordamount;
     }
 
-    public void setOrdamount(double ordamount) {
+    public void setOrdamount(double ordamount)
+    {
         this.ordamount = ordamount;
     }
 
-    public String getOrderdescription() {
+    public double getAdvanceamount()
+    {
+        return advanceamount;
+    }
+
+    public void setAdvanceamount(double advanceamount)
+    {
+        this.advanceamount = advanceamount;
+    }
+
+    public String getOrderdescription()
+    {
         return orderdescription;
     }
 
-    public void setOrderdescription(String orderdescription) {
+    public void setOrderdescription(String orderdescription)
+    {
         this.orderdescription = orderdescription;
     }
 
-    public Customer getCustomer() {
+    public Customer getCustomer()
+    {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(Customer customer)
+    {
         this.customer = customer;
+    }
+
+    public Set<Payment> getPayments()
+    {
+        return payments;
+    }
+
+    public void setPayments(Set<Payment> payments)
+    {
+        this.payments = payments;
+    }
+
+    public void addPayments(Payment type)
+    {
+//        payments.add(type);
     }
 }

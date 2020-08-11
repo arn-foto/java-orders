@@ -1,4 +1,8 @@
 package com.lambdaschool.javaorders.repositories;
 
-public interface PaymentsRepository {
+import com.lambdaschool.javaorders.models.Payment;
+import org.springframework.data.repository.CrudRepository;
+
+public interface PaymentsRepository extends CrudRepository<Payment, Long>
+{
 }

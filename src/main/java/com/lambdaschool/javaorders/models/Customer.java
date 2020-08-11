@@ -1,163 +1,177 @@
 package com.lambdaschool.javaorders.models;
 
-
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name= "customers")
+@Table(name = "customers")
 public class Customer
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(unique = true ,
-            nullable = false)
-    private long custocode;
+    private long custcode; // primary key
 
     @Column(nullable = false)
-    private String custcity;
-    private String custcountry;
     private String custname;
+
+    private String custcity;
+    private String workingarea;
+    private String custcountry;
     private String grade;
     private double openingamt;
-    private double outstandingamt;
-    private double paymentamt;
-    private String phone;
     private double receiveamt;
-    private String workingarea;
-
+    private double paymentamt;
+    private double outstandingamt;
+    private String phone;
 
     @ManyToOne
-    @JoinColumn(name ="agentcode")
-    private Agent agent;
+    @JoinColumn(name = "agentcode", nullable = false) // primary key inside of agent, sql handles in relational DB
+    private Agent agent; // java handles as object
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 
+    // Constructors
     public Customer()
     {
-        // default empty constructor
     }
 
-    public Customer(long custocode,
-                    String custcity,
-                    String custcountry,
-                    String custname,
-                    String grade,
-                    double openingamt,
-                    double outstandingamt,
-                    double paymentamt,
-                    String phone,
-                    double receiveamt,
-                    String workingarea,
-                    Agent agent)
-
+    public Customer(
+            String custname,
+            String custcity,
+            String workingarea,
+            String custcountry,
+            String grade,
+            double openingamt,
+            double receiveamt,
+            double paymentamt,
+            double outstandingamt,
+            String phone,
+            Agent agent)
     {
-        this.custocode = custocode;
-        this.custcity = custcity;
-        this.custcountry = custcountry;
         this.custname = custname;
+        this.custcity = custcity;
+        this.workingarea = workingarea;
+        this.custcountry = custcountry;
         this.grade = grade;
         this.openingamt = openingamt;
-        this.outstandingamt = outstandingamt;
-        this.paymentamt = paymentamt;
-        this.phone = phone;
         this.receiveamt = receiveamt;
-        this.workingarea = workingarea;
+        this.paymentamt = paymentamt;
+        this.outstandingamt = outstandingamt;
+        this.phone = phone;
         this.agent = agent;
     }
 
-    public long getCustocode() {
-        return custocode;
+
+    // Getters and Setters
+    public long getCustcode()
+    {
+        return custcode;
     }
 
-    public void setCustocode(long custocode) {
-        this.custocode = custocode;
+    public void setCustcode(long custcode)
+    {
+        this.custcode = custcode;
     }
 
-    public String getCustcity() {
-        return custcity;
-    }
-
-    public void setCustcity(String custcity) {
-        this.custcity = custcity;
-    }
-
-    public String getCustcountry() {
-        return custcountry;
-    }
-
-    public void setCustcountry(String custcountry) {
-        this.custcountry = custcountry;
-    }
-
-    public String getCustname() {
+    public String getCustname()
+    {
         return custname;
     }
 
-    public void setCustname(String custname) {
+    public void setCustname(String custname)
+    {
         this.custname = custname;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getCustcity()
+    {
+        return custcity;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setCustcity(String custcity)
+    {
+        this.custcity = custcity;
     }
 
-    public double getOpeningamt() {
-        return openingamt;
-    }
-
-    public void setOpeningamt(double openingamt) {
-        this.openingamt = openingamt;
-    }
-
-    public double getOutstandingamt() {
-        return outstandingamt;
-    }
-
-    public void setOutstandingamt(double outstandingamt) {
-        this.outstandingamt = outstandingamt;
-    }
-
-    public double getPaymentamt() {
-        return paymentamt;
-    }
-
-    public void setPaymentamt(double paymentamt) {
-        this.paymentamt = paymentamt;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public double getReceiveamt() {
-        return receiveamt;
-    }
-
-    public void setReceiveamt(double receiveamt) {
-        this.receiveamt = receiveamt;
-    }
-
-    public String getWorkingarea() {
+    public String getWorkingarea()
+    {
         return workingarea;
     }
 
-    public void setWorkingarea(String workingarea) {
+    public void setWorkingarea(String workingarea)
+    {
         this.workingarea = workingarea;
     }
 
-    public Agent getAgent() {
-        return agent;
+    public String getCustcountry()
+    {
+        return custcountry;
     }
 
-    public void setAgent(Agent agent) {
-        this.agent = agent;
+    public void setCustcountry(String custcountry)
+    {
+        this.custcountry = custcountry;
+    }
+
+    public String getGrade()
+    {
+        return grade;
+    }
+
+    public void setGrade(String grade)
+    {
+        this.grade = grade;
+    }
+
+    public double getOpeningamt()
+    {
+        return openingamt;
+    }
+
+    public void setOpeningamt(double openingamt)
+    {
+        this.openingamt = openingamt;
+    }
+
+    public double getReceiveamt()
+    {
+        return receiveamt;
+    }
+
+    public void setReceiveamt(double receiveamt)
+    {
+        this.receiveamt = receiveamt;
+    }
+
+    public double getPaymentamt()
+    {
+        return paymentamt;
+    }
+
+    public void setPaymentamt(double paymentamt)
+    {
+        this.paymentamt = paymentamt;
+    }
+
+    public double getOutstandingamt()
+    {
+        return outstandingamt;
+    }
+
+    public void setOutstandingamt(double outstandingamt)
+    {
+        this.outstandingamt = outstandingamt;
+    }
+
+    public String getPhone()
+    {
+        return phone;
+    }
+
+    public void setPhone(String phone)
+    {
+        this.phone = phone;
     }
 }

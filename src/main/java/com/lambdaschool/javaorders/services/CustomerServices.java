@@ -1,4 +1,9 @@
+
 package com.lambdaschool.javaorders.services;
 
-public interface CustomerServices {
+import com.lambdaschool.javaorders.models.Customer;
+
+public interface CustomerServices
+{
+    Customer save(Customer customer);
 }
